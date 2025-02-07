@@ -1,9 +1,11 @@
 package com.reinertisa.supapi.service;
 
 import com.reinertisa.supapi.model.Song;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SongServiceImpl implements SongService {
     @Override
     public List<Song> findAll() {
