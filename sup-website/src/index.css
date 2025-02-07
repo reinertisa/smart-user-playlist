@@ -7,7 +7,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
 }
+
+nav {
+  padding: 10px 20px;
+}
+
+nav h1 {
+  margin: 10px 0;
+}
+
+nav ul {
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.song-list {
+  margin: 20px auto;
+  background: #eee;
+}
+
+.song-list ul {
+  list-style-type: none;
+}
+
