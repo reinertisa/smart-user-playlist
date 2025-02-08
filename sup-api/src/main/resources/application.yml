@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: sup-api
+  h2:
+    console:
+      enabled: true
+  main:
+    banner-mode: off
+  datasource:
+    generate-unique-name: false
+    name: test
+    username: test
+  jpa:
+    show-sql: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    root: warn
+    org:
+      hibernate:
+        sql: trace
+        orm:
+          jdbc:
+            bind: trace
