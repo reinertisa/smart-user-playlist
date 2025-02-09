@@ -1,20 +1,21 @@
 package com.reinertisa.supapi.service;
 
-import com.reinertisa.supapi.model.Song;
+import com.reinertisa.supapi.model.SongDto;
+import com.reinertisa.supapi.model.SongRequest;
 
 import java.util.List;
 
 public interface SongService {
 
-    List<Song> findAll();
+    List<SongDto> findAll();
 
-    Song findById(long id);
+    SongDto findById(long id);
 
-    Song create(Song song);
+    SongDto create(SongRequest songRequest);
 
-    Song update(long id, Song song);
+    SongDto update(long id, SongService songService);
 
     void delete(long id);
 
-    List<Song> filter(String title);
+    List<SongDto> filter(String title);
 }
