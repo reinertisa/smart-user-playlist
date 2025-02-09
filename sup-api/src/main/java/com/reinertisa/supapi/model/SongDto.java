@@ -2,16 +2,16 @@ package com.reinertisa.supapi.model;
 
 public class SongDto {
 
-    private long id;
+    private long songId;
     private String title;
     private String artist;
 
-    public long getId() {
-        return id;
+    public long getSongId() {
+        return songId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setSongId(long songId) {
+        this.songId = songId;
     }
 
     public String getTitle() {
@@ -33,7 +33,7 @@ public class SongDto {
     @Override
     public String toString() {
         return "SongDto{" +
-                "id=" + id +
+                "songId=" + songId +
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 '}';
