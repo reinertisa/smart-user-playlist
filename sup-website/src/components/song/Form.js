@@ -20,12 +20,25 @@ export default function SongForm() {
     return (
         <form onSubmit={handleSubmit}>
             <label htmlFor="artist">Artist</label>
-            <input id="artist" type="text" value={artist} onChange={handleArtistChange} required={true} />
+            <input
+                id="artist"
+                type="text"
+                value={artist}
+                onChange={handleArtistChange}
+                required={true}
+                placeholder="Song title"
+            />
 
-            <label htmlFor="title">Title</label>
-            <input id="title" type="text" value={title} onChange={handleTitleChange} required={true} />
+            <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={handleTitleChange}
+                required={true}
+                placeholder="artist"
+            />
 
-            <button type="submit">Save</button>
+            <input type="submit" value="Save" />
         </form>
     )
 }
