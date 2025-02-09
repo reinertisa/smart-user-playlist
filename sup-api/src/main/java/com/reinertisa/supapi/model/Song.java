@@ -16,7 +16,6 @@ public class Song {
     private String artist;
 
     public Song() {
-
     }
 
     public Song(String title, String artist) {

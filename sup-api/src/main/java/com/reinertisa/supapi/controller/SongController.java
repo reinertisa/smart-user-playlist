@@ -2,13 +2,12 @@ package com.reinertisa.supapi.controller;
 
 
 import com.reinertisa.supapi.model.Song;
+import com.reinertisa.supapi.model.SongDto;
+import com.reinertisa.supapi.model.SongRequest;
 import com.reinertisa.supapi.service.SongService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -24,11 +23,21 @@ public class SongController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Song>> getAllSongs() {
+    public ResponseEntity<List<SongDto>> getAllSongs() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(songService.findAll());
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
     }
+
+    @PostMapping("")
+    public ResponseEntity<SongDto> createSong(@RequestBody SongRequest songRequest) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(songRequest));
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
+    }
+
 }
