@@ -5,22 +5,22 @@ export const ThemeContext = createContext(null);
 export default function ThemeContextProvider({ children }) {
     const [isLightTheme, setIsLightTheme] = useState(true);
     const darkMode = {
-        syntax: '#eee',
-        ui: '#333',
+        syntax: '#555',
+        ui: '#ddd',
         bg: '#eee'
     };
 
     const lightMode = {
-        syntax: '#eee',
+        syntax: '#ddd',
         ui: '#333',
-        bg: '#eee'
+        bg: '#555'
     };
 
     const toggleTheme = () => setIsLightTheme(!isLightTheme);
 
 
     return (
-        <ThemeContext.Provider value={{darkMode, lightMode, toggleTheme}}>
+        <ThemeContext.Provider value={{isLightTheme, darkMode, lightMode, toggleTheme}}>
             {children}
         </ThemeContext.Provider>
     );
