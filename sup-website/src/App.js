@@ -5,20 +5,25 @@ import Navbar from "./components/Navbar";
 import AuthContextProvider from "./components/context/AuthContext";
 import ThemeContextProvider from "./components/context/ThemeContext";
 import ThemeToggle from "./components/ThemeToggle";
+import {BrowserRouter, Route, Routes} from "react-router";
 
 function App() {
   return (
       <div className="App">
+          <BrowserRouter>
           <ThemeContextProvider>
               <SongContextProvider>
                   <AuthContextProvider>
                       <Navbar />
                   </AuthContextProvider>
-                  <SongList />
-                  <SongForm />
+                  <Routes>
+                      <Route path="/" element={<SongList />} />
+                      <Route path="/create" element={<SongForm />} />
+                  </Routes>
                   <ThemeToggle />
               </SongContextProvider>
           </ThemeContextProvider>
+          </BrowserRouter>
       </div>
   );
 }

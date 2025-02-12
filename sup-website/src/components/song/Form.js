@@ -1,7 +1,9 @@
 import {useContext, useState} from 'react';
 import {SongContext} from "../context/SongContext";
+import {useNavigate} from "react-router";
 
 export default function SongForm() {
+    const navigate = useNavigate()
     const {dispatchSongs} = useContext(SongContext);
     const [artist, setArtist] = useState('');
     const [title, setTitle] = useState('');
@@ -37,9 +39,9 @@ export default function SongForm() {
             setLoading(false);
             setErr(err);
         }
-
         setTitle('');
         setArtist('');
+        navigate("/");
     }
 
     return (
