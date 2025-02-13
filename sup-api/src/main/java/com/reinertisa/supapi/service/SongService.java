@@ -1,5 +1,6 @@
 package com.reinertisa.supapi.service;
 
+import com.reinertisa.supapi.exception.ResourceNotFoundException;
 import com.reinertisa.supapi.model.SongDto;
 import com.reinertisa.supapi.model.SongRequest;
 
@@ -15,7 +16,7 @@ public interface SongService {
 
     SongDto update(long id, SongService songService);
 
-    void delete(long id);
+    void delete(long id) throws ResourceNotFoundException;
 
     List<SongDto> filter(String title);
 }

@@ -1,7 +1,6 @@
 package com.reinertisa.supapi.controller;
 
 
-import com.reinertisa.supapi.model.Song;
 import com.reinertisa.supapi.model.SongDto;
 import com.reinertisa.supapi.model.SongRequest;
 import com.reinertisa.supapi.service.SongService;
@@ -35,6 +34,16 @@ public class SongController {
     public ResponseEntity<SongDto> createSong(@RequestBody SongRequest songRequest) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(songRequest));
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSong(@PathVariable long id) {
+        try {
+            songService.delete(id);
+            return ResponseEntity.noContent().build();
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }

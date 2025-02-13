@@ -1,5 +1,6 @@
 package com.reinertisa.supapi.service;
 
+import com.reinertisa.supapi.exception.ResourceNotFoundException;
 import com.reinertisa.supapi.model.Song;
 import com.reinertisa.supapi.model.SongDto;
 import com.reinertisa.supapi.model.SongMapper;
@@ -44,8 +45,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public void delete(long id) {
-
+    public void delete(long id) throws ResourceNotFoundException {
+        Song song = songRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid song id: " + id));
+        songRepository.delete(song);
     }
 
     @Override
