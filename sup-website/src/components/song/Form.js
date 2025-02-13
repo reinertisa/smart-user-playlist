@@ -45,27 +45,28 @@ export default function SongForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="artist">Artist</label>
-            <input
-                id="artist"
-                type="text"
-                value={artist}
-                onChange={handleArtistChange}
-                required={true}
-                placeholder="Song title"
-            />
-
-            <input
-                id="title"
-                type="text"
-                value={title}
-                onChange={handleTitleChange}
-                required={true}
-                placeholder="artist"
-            />
-            <input disabled={loading} type="submit" value="Save" />
-            {err && <p style={{color: 'red'}}>{err.message}</p> }
-        </form>
-    )
+        <div className="create">
+            <h2>Add a New Song</h2>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="artist">Artist</label>
+                <input
+                    id="artist"
+                    type="text"
+                    value={artist}
+                    onChange={handleArtistChange}
+                    required={true}
+                />
+                <label htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    required={true}
+                />
+                <button disabled={loading} type="submit">Save</button>
+                {err && <p style={{color: 'red'}}>{err.message}</p> }
+            </form>
+        </div>
+    );
 }
