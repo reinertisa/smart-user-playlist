@@ -5,13 +5,13 @@ export const ThemeContext = createContext(null);
 export default function ThemeContextProvider({ children }) {
     const [isLightTheme, setIsLightTheme] = useState(true);
     const darkMode = {
-        syntax: '#555',
+        syntax: '#ffffff',
         ui: '#ddd',
-        bg: '#eee'
+        bg: '#040303'
     };
 
     const lightMode = {
-        syntax: '#ddd',
+        syntax: '#040303',
         ui: '#333',
         bg: '#555'
     };

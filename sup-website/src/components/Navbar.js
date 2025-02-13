@@ -2,6 +2,7 @@ import {useContext} from 'react';
 import {AuthContext} from "./context/AuthContext";
 import {ThemeContext} from "./context/ThemeContext";
 import {Link} from "react-router";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
     const {isAuthenticated, toggleAuth} = useContext(AuthContext);
@@ -15,6 +16,7 @@ export default function Navbar() {
                 <li><Link to="/">Song List</Link></li>
                 <li><Link to="/create">Add song</Link></li>
                 <li onClick={toggleAuth}>{isAuthenticated ? 'Logged in' : 'Logged out'}</li>
+                <ThemeToggle />
             </ul>
         </nav>
     )

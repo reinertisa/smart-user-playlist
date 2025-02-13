@@ -4,7 +4,6 @@ import SongForm from "./components/song/Form";
 import Navbar from "./components/Navbar";
 import AuthContextProvider from "./components/context/AuthContext";
 import ThemeContextProvider from "./components/context/ThemeContext";
-import ThemeToggle from "./components/ThemeToggle";
 import {BrowserRouter, Route, Routes} from "react-router";
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
                       <Route path="/" element={<SongList />} />
                       <Route path="/create" element={<SongForm />} />
                   </Routes>
-                  <ThemeToggle />
               </SongContextProvider>
           </ThemeContextProvider>
           </BrowserRouter>
