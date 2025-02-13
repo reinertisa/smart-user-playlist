@@ -67,13 +67,11 @@
 
 .song-list .title {
   font-weight: bold;
-  color: #fff;
   font-size: 1.2em;
 }
 
 .song-list .artist {
   font-size: 0.9em;
-  color: #ddd;
 }
 
 .empty {
