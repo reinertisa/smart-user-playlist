@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  api:
+    image: springboot-h2
+    build: ./
+    container_name: api_c
+    ports:
+      - '8080:8080'
