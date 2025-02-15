@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  sup-api:
+    build:
+      context: ./sup-api
+    image: sup/sup-api:1.0.0
+    container_name: sup-api
+    ports:
+      - '8080:8080'
+
+  sup-website:
+    build:
+      context: ./sup-website
+    image: sup/sup-website:1.0.0
+    container_name: sup-website
+    ports:
+      - '3000:80'
+    depends_on:
+      - sup-api

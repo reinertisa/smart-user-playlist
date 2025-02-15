@@ -1,0 +1,44 @@
+name: Smart User Playlist Frontend Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - sup-website/**
+      - 'docker-compose.yml'
+      - .github/workflows/ci-website.yml
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  build-image:
+    name: Build FE Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd sup-website
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push to Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: ./sup-website
+          file: ./sup-website/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/sup-website:latest,
+                ${{ vars.DOCKERHUB_USERNAME }}/sup-website:${{ steps.extract_version.outputs.VERSION }}
