@@ -13,7 +13,7 @@ ARG APP_VERSION=1.0.0
 WORKDIR /app
 COPY --from=build /build/target/sup-api-*.jar /app/
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENV JAR_VERSION=${APP_VERSION}
 CMD java -jar sup-api-${JAR_VERSION}.jar
