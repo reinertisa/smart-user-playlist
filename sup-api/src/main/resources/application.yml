@@ -3,14 +3,20 @@ spring:
     name: sup-api
 
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    hibernate:
-      ddl-auto: create-drop
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+
   main:
     banner-mode: off
 #  h2:
