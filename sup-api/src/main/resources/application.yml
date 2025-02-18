@@ -10,12 +10,11 @@ spring:
       hibernate:
         format_sql: true
     database: postgresql
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-#    username: username
-#    password: password
-#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/sup_db
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
 
   main:
     banner-mode: off
