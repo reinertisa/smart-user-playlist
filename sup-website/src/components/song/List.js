@@ -13,7 +13,7 @@ export default function SongList() {
         let mount = true;
         const loadData = async () => {
             try {
-                const rez = await fetch('http://localhost:8080/api/v1/songs');
+                const rez = await fetch('http://localhost:8081/api/v1/songs');
                 if (!rez.ok) {
                     throw Error('Failed to fetching data');
                 }
@@ -39,7 +39,7 @@ export default function SongList() {
 
     const handleDelete = async (id) => {
         try {
-            await fetch(`http://localhost:8080/api/v1/songs/${id}`, {
+            await fetch(`http://localhost:8081/api/v1/songs/${id}`, {
                 method: 'DELETE',
             });
             setSongs(songs.filter(song => song?.songId !== id));

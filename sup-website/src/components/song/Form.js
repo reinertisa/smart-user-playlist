@@ -18,7 +18,7 @@ export default function SongForm() {
 
         try {
             setLoading(true);
-            const rez = await fetch('http://localhost:8080/api/v1/songs', {
+            const rez = await fetch('http://localhost:8081/api/v1/songs', {
                 headers: {
                     'Content-Type': 'application/json'
                 },
