@@ -40,11 +40,21 @@ jobs:
       - name: Compiling the project
         run: |
           cd sup-api
-          ./mvnw clean compile
+          mvn clean compile
 
   unit-tests:
     runs-on: ubuntu-latest
     name: Unit tests
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          - "5432:5432"
 
     steps:
       - name: Checkout code
@@ -57,16 +67,32 @@ jobs:
         with:
           java-version: 21
           distribution: 'temurin'
-#          cache: 'maven'
+          cache: 'maven'
+
+      - name: Set up environment variables
+        run: |
+          echo "DATABASE_URL=jdbc:postgresql://localhost:5432/postgres" >> $GITHUB_ENV
+          echo "DATABASE_USER=postgres" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=password" >> $GITHUB_ENV
 
       - name: Running unit tests
         run: |
           cd sup-api
-          ./mvnw clean test
-
+          mvn clean test
 
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          - "5432:5432"
+
     name: Build api
     needs: [compile, unit-tests]
     steps:
@@ -81,6 +107,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
+
+      - name: Set up environment variables
+        run: |
+          echo "DATABASE_URL=jdbc:postgresql://localhost:5432/postgres" >> $GITHUB_ENV
+          echo "DATABASE_USER=postgres" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=password" >> $GITHUB_ENV
 
       - name: Build with Maven
         run: |
