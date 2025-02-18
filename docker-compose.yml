@@ -7,7 +7,16 @@ services:
     image: sup/sup-api:1.0.0
     container_name: sup-api
     ports:
-      - '8080:8080'
+      - '8081:8081'
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://sup-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+
+    depends_on:
+      - db
 
   sup-website:
     build:
@@ -15,6 +24,16 @@ services:
     image: sup/sup-website:1.0.0
     container_name: sup-website
     ports:
-      - '3000:80'
+      - '4000:80'
     depends_on:
       - sup-api
+
+  db:
+    container_name: sup-db
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
