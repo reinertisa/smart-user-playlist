@@ -88,6 +88,8 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_DB: postgres
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
         ports:
           - "5432:5432"
 
@@ -109,6 +111,8 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "DATABASE_URL=jdbc:postgresql://localhost:5432/postgres" >> $GITHUB_ENV
+          echo "DATABASE_USER=username" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=password" >> $GITHUB_ENV
 
       - name: Build with Maven
         run: |
