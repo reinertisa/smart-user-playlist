@@ -9,7 +9,10 @@ on:
       - .github/workflows/ci-website.yml
   pull_request:
     branches: [ "main" ]
-
+    paths:
+      - sup-website/**
+      - 'docker-compose.yml'
+      - .github/workflows/ci-website.yml
 
 jobs:
   build-image:
