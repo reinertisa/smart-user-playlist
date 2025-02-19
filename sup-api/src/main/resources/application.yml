@@ -37,9 +37,5 @@ server:
 logging:
   level:
     root: warn
-    org:
-      hibernate:
-        sql: trace
-        orm:
-          jdbc:
-            bind: trace
+    org.hibernate.sql: trace
+    org.hibernate.orm.jdbc.bind: trace
