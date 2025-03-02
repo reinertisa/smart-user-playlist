@@ -1,0 +1,17 @@
+#Database
+POSTGRESQL_USERNAME: username
+POSTGRESQL_PASSWORD: password
+POSTGRESQL_HOST: localhost
+POSTGRESQL_PORT: 5432
+POSTGRESQL_DATABASE: sup_db
+
+#Server
+CONTAINER_PORT: 8081
+ACTIVE_PROFILE: prod
+
+#Email Config
+EMAIL_HOST: smtp.gmail.com
+EMAIL_PORT: 587
+EMAIL_ID: test@gmail.com
+EMAIL_PASSWORD: test1234
+VERIFY_EMAIL_HOST: http://locahost:8081
