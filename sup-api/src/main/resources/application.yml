@@ -61,6 +61,10 @@ spring:
             required: true
     verify:
       host: ${VERIFY_EMAIL_HOST}
+  security:
+    user:
+      name: user
+      password: test
 #  h2:
 #    console:
 #      enabled: true
@@ -86,3 +90,4 @@ logging:
 #    root: warn
     org.hibernate.sql: trace
     org.hibernate.orm.jdbc.bind: trace
+
