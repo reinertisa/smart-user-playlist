@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import AuthContextProvider from "./components/context/AuthContext";
 import ThemeContextProvider from "./components/context/ThemeContext";
 import {BrowserRouter, Route, Routes} from "react-router";
+import LoginForm from "./components/user/Login";
+import RegisterForm from "./components/user/Register";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
                   <Routes>
                       <Route path="/" element={<SongList />} />
                       <Route path="/create" element={<SongForm />} />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/register" element={<RegisterForm />} />
                   </Routes>
               </SongContextProvider>
           </ThemeContextProvider>
