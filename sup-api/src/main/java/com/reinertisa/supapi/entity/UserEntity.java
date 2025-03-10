@@ -2,9 +2,7 @@ package com.reinertisa.supapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +30,21 @@ public class UserEntity extends Auditable {
     private String qrCodeSecret;
     @Column(columnDefinition = "text")
     private String qrCodeImageUri;
-    private String roles; // TODO(reinertisa) create Role class and map here with JPA
+
+    @ManyToOne(
+            targetEntity = RoleEntity.class,
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"
+            )
+    )
+    private RoleEntity role;
 
     public String getUserId() {
         return userId;
@@ -154,12 +166,12 @@ public class UserEntity extends Auditable {
         this.qrCodeImageUri = qrCodeImageUri;
     }
 
-    public String getRoles() {
-        return roles;
+    public RoleEntity getRole() {
+        return role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRole(RoleEntity role) {
+        this.role = role;
     }
 
     @Override
@@ -180,7 +192,7 @@ public class UserEntity extends Auditable {
                 ", mfa=" + mfa +
                 ", qrCodeSecret='" + qrCodeSecret + '\'' +
                 ", qrCodeImageUri='" + qrCodeImageUri + '\'' +
-                ", roles='" + roles + '\'' +
+                ", role=" + role +
                 '}';
     }
 }
