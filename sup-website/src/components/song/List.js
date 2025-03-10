@@ -11,9 +11,15 @@ export default function SongList() {
 
     useEffect(() => {
         let mount = true;
-        const loadData = async () => {
+        const loadData = async () => {console.log(window.localStorage.getItem('auth_token'));
             try {
-                const rez = await fetch('http://localhost:8081/api/v1/songs');
+                const rez = await fetch('http://localhost:8081/api/v1/songs', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.localStorage.getItem('auth_token')}`
+                    },
+                    method: 'GET',
+                });
                 if (!rez.ok) {
                     throw Error('Failed to fetching data');
                 }
