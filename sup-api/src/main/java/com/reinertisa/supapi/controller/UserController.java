@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<User> login(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.verify(user));
     }
 
