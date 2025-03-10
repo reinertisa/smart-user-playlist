@@ -1,22 +1,22 @@
 package com.reinertisa.supapi.service;
 
 import com.reinertisa.supapi.exception.ResourceNotFoundException;
-import com.reinertisa.supapi.model.SongDto;
-import com.reinertisa.supapi.model.SongRequest;
+import com.reinertisa.supapi.dto.Song;
+import com.reinertisa.supapi.dtorequest.SongRequest;
 
 import java.util.List;
 
 public interface SongService {
 
-    List<SongDto> findAll();
+    List<Song> findAll();
 
-    SongDto findById(long id);
+    Song findById(long id);
 
-    SongDto create(SongRequest songRequest);
+    Song create(SongRequest songRequest);
 
-    SongDto update(long id, SongService songService);
+    Song update(long id, SongService songService);
 
     void delete(long id) throws ResourceNotFoundException;
 
-    List<SongDto> filter(String title);
+    List<Song> filter(String title);
 }

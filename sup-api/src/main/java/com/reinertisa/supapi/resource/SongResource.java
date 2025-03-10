@@ -1,8 +1,8 @@
-package com.reinertisa.supapi.controller;
+package com.reinertisa.supapi.resource;
 
 
-import com.reinertisa.supapi.model.SongDto;
-import com.reinertisa.supapi.model.SongRequest;
+import com.reinertisa.supapi.dto.Song;
+import com.reinertisa.supapi.dtorequest.SongRequest;
 import com.reinertisa.supapi.service.SongService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/songs")
 @CrossOrigin(origins = "*")
-public class SongController {
+public class SongResource {
     private final SongService songService;
 
-    public SongController(SongService songService) {
+    public SongResource(SongService songService) {
         this.songService = songService;
     }
 
     @GetMapping("")
-    public ResponseEntity<List<SongDto>> getAllSongs() {
+    public ResponseEntity<List<Song>> getAllSongs() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(songService.findAll());
         } catch (Exception ex) {
@@ -31,7 +31,7 @@ public class SongController {
     }
 
     @PostMapping("")
-    public ResponseEntity<SongDto> createSong(@RequestBody SongRequest songRequest) {
+    public ResponseEntity<Song> createSong(@RequestBody SongRequest songRequest) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(songRequest));
         } catch (Exception ex) {

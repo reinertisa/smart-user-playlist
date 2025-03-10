@@ -1,9 +1,9 @@
 package com.reinertisa.supapi.repository;
 
-import com.reinertisa.supapi.model.Song;
+import com.reinertisa.supapi.entity.SongEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SongRepository extends JpaRepository<Song, Long> {
+public interface SongRepository extends JpaRepository<SongEntity, Long> {
 }

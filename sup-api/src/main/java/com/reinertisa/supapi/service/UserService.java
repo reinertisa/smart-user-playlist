@@ -1,11 +1,10 @@
 package com.reinertisa.supapi.service;
 
-import com.reinertisa.supapi.model.User;
+import com.reinertisa.supapi.entity.UserEntity;
 
 
 public interface UserService {
 
-    User createUser(User user);
+    UserEntity createUser(UserEntity userEntity);
 
-    User verify(User user);
 }

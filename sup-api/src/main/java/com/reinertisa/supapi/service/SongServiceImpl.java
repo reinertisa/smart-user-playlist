@@ -1,10 +1,10 @@
 package com.reinertisa.supapi.service;
 
 import com.reinertisa.supapi.exception.ResourceNotFoundException;
-import com.reinertisa.supapi.model.Song;
-import com.reinertisa.supapi.model.SongDto;
-import com.reinertisa.supapi.model.SongMapper;
-import com.reinertisa.supapi.model.SongRequest;
+import com.reinertisa.supapi.dto.Song;
+import com.reinertisa.supapi.entity.SongEntity;
+import com.reinertisa.supapi.mapper.SongMapper;
+import com.reinertisa.supapi.dtorequest.SongRequest;
 import com.reinertisa.supapi.repository.SongRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -23,37 +23,37 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<SongDto> findAll() {
+    public List<Song> findAll() {
         return songMapper.toDtoListFromEntityList(songRepository.findAll());
     }
 
     @Override
-    public SongDto findById(long id) {
+    public Song findById(long id) {
         return null;
     }
 
     @Override
     @Transactional
-    public SongDto create(SongRequest songRequest) {
-        Song song = songRepository.save(songMapper.toEntityFromRequest(songRequest));
-        return songMapper.toDtoFromEntity(song);
+    public Song create(SongRequest songRequest) {
+        SongEntity songEntity = songRepository.save(songMapper.toEntityFromRequest(songRequest));
+        return songMapper.toDtoFromEntity(songEntity);
     }
 
     @Override
-    public SongDto update(long id, SongService songService) {
+    public Song update(long id, SongService songService) {
         return null;
     }
 
     @Override
     public void delete(long id) throws ResourceNotFoundException {
-        Song song = songRepository
+        SongEntity songEntity = songRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Invalid song id: " + id));
-        songRepository.delete(song);
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid songEntity id: " + id));
+        songRepository.delete(songEntity);
     }
 
     @Override
-    public List<SongDto> filter(String title) {
+    public List<Song> filter(String title) {
         return List.of();
     }
 }

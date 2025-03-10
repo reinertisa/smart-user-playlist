@@ -1,10 +1,10 @@
-package com.reinertisa.supapi.model;
+package com.reinertisa.supapi.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "songs")
-public class Song {
+public class SongEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -15,10 +15,10 @@ public class Song {
     @Column(name = "artist")
     private String artist;
 
-    public Song() {
+    public SongEntity() {
     }
 
-    public Song(String title, String artist) {
+    public SongEntity(String title, String artist) {
         this.title = title;
         this.artist = artist;
     }
@@ -49,7 +49,7 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
+        return "SongEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +

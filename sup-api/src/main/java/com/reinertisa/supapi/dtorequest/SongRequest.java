@@ -1,9 +1,15 @@
-package com.reinertisa.supapi.model;
+package com.reinertisa.supapi.dtorequest;
 
-public class SongDto {
+import jakarta.validation.constraints.NotBlank;
+
+public class SongRequest {
 
     private long songId;
+
+    @NotBlank(message = "This field is required.")
     private String title;
+
+    @NotBlank(message = "This field is required.")
     private String artist;
 
     public long getSongId() {
@@ -28,14 +34,5 @@ public class SongDto {
 
     public void setArtist(String artist) {
         this.artist = artist;
-    }
-
-    @Override
-    public String toString() {
-        return "SongDto{" +
-                "songId=" + songId +
-                ", title='" + title + '\'' +
-                ", artist='" + artist + '\'' +
-                '}';
     }
 }
