@@ -15,6 +15,8 @@ export default function Navbar() {
             <ul>
                 <li><Link to="/">Song List</Link></li>
                 <li><Link to="/create">Add song</Link></li>
+                <li><Link to="/login">Sign in</Link></li>
+                <li><Link to="/register">Sign up</Link></li>
                 <li onClick={toggleAuth}>{isAuthenticated ? 'Logged in' : 'Logged out'}</li>
                 <ThemeToggle />
             </ul>
