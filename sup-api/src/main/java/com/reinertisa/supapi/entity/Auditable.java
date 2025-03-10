@@ -36,4 +36,74 @@ public abstract class Auditable {
     @LastModifiedDate
     @Column(name = "update_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void beforePersist() {
+        Long userId = 1L;
+        if (userId == null) {
+            throw new ApiException("Cannot persist entity without user ID in Request Context for this thread");
+        }
+        setCreatedAt(LocalDateTime.now());
+        setCreatedBy(userId);
+        setUpdatedBy(userId);
+        setUpdatedAt(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    public void beforeUpdate() {
+        Long userId = 1L;
+        if (userId == null) {
+            throw new ApiException("Cannot update entity withour user ID in Request Context for this thread");
+        }
+        setUpdatedAt(LocalDateTime.now());
+        setUpdatedBy(userId);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
