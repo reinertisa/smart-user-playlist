@@ -1,6 +1,7 @@
 package com.reinertisa.supapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.reinertisa.supapi.exception.ApiException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
