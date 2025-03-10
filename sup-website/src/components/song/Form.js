@@ -14,13 +14,15 @@ export default function SongForm() {
     const handleTitleChange = (evt) => setTitle(evt.target.value);
 
     const handleSubmit = async (evt) => {
+        console.log(window.localStorage.getItem('auth_token'));
         evt.preventDefault();
 
         try {
             setLoading(true);
             const rez = await fetch('http://localhost:8081/api/v1/songs', {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${window.localStorage.getItem('auth_token')}`
                 },
                 method: 'POST',
                 body: JSON.stringify({
