@@ -29,12 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String verify(User user) {
+    public User verify(User user) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            User u = userRepo.findByUsername(user.getUsername()).orElse(null);
+            String token = jwtService.generateToken(user.getUsername());
+            if (u != null) {
+                u.setToken(token);
+                return userRepo.save(u);
+            }
         }
-        return "Invalid username or password";
+        return null;
     }
 }

@@ -7,5 +7,5 @@ public interface UserService {
 
     User createUser(User user);
 
-    String verify(User user);
+    User verify(User user);
 }
