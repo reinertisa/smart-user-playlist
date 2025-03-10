@@ -1,61 +1,23 @@
 package com.reinertisa.supapi.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "username", unique = true, nullable = false)
-    private String username;
-
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(name = "token")
-    private String token;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+public class UserEntity extends Auditable {
+    private String userId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Integer loginAttempts;
+    private LocalDateTime lastLogin;
+    private String phone;
+    private String bio;
+    private String imageUrl;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean enabled;
+    private boolean mfa;
+    private String qrCodeSecret;
+    private String qrCodeImageUri;
+    private String roles; // TODO(reinertisa) create Role class and map here with JPA
 }
