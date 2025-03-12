@@ -1,8 +1,8 @@
 spring:
   application:
     name: sup-api
-#  main:
-#    banner-mode: off
+  #  main:
+  #    banner-mode: off
   profiles:
     active: ${ACTIVE_PROFILE:dev}
   jackson:
@@ -24,7 +24,7 @@ spring:
     open-in-view: false
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -61,10 +61,10 @@ spring:
             required: true
     verify:
       host: ${VERIFY_EMAIL_HOST}
-  security:
-    user:
-      name: user
-      password: test
+#  security:
+#    user:
+#      name: user
+#      password: test
 #  h2:
 #    console:
 #      enabled: true
@@ -87,7 +87,6 @@ server:
 
 logging:
   level:
-#    root: warn
+    #    root: warn
     org.hibernate.sql: trace
     org.hibernate.orm.jdbc.bind: trace
-
