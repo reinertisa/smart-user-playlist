@@ -1,6 +1,7 @@
 package com.reinertisa.supapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.reinertisa.supapi.enumeration.Authority;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -9,7 +10,7 @@ import jakarta.persistence.Table;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class RoleEntity extends Auditable{
     private String name;
-    private String authorities;
+    private Authority authorities;
 
     public String getName() {
         return name;
@@ -19,11 +20,11 @@ public class RoleEntity extends Auditable{
         this.name = name;
     }
 
-    public String getAuthorities() {
+    public Authority getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(String authorities) {
+    public void setAuthorities(Authority authorities) {
         this.authorities = authorities;
     }
 
@@ -31,7 +32,7 @@ public class RoleEntity extends Auditable{
     public String toString() {
         return "RoleEntity{" +
                 "name='" + name + '\'' +
-                ", authorities='" + authorities + '\'' +
+                ", authorities=" + authorities +
                 '}';
     }
 }
