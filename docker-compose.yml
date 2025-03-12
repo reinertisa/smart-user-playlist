@@ -7,13 +7,13 @@ services:
     image: sup/sup-api:1.0.0
     container_name: sup-api
     ports:
-      - '8081:8081'
+      - '8085:8085'
 
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://sup_db_container:5432/sup_database
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=letmein
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://sup_db_container:5432/sup_db
+      - SPRING_DATASOURCE_USERNAME=username
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
     depends_on:
       - postgres_db
