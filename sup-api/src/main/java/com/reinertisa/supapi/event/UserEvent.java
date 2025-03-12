@@ -14,6 +14,12 @@ public class UserEvent {
         return user;
     }
 
+    public UserEvent(UserEntity user, EventType type, Map<?, ?> data) {
+        this.user = user;
+        this.type = type;
+        this.data = data;
+    }
+
     public void setUser(UserEntity user) {
         this.user = user;
     }
