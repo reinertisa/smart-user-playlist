@@ -19,6 +19,7 @@ public class UserUtils {
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
         user.setEnabled(false);
+        user.setMfa(false);
         user.setLoginAttempts(0);
         user.setQrCodeSecret(StringUtils.EMPTY);
         user.setPhone(StringUtils.EMPTY);
