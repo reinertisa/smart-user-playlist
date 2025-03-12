@@ -1,4 +1,4 @@
-package com.reinertisa.supapi.service;
+package com.reinertisa.supapi.service.impl;
 
 import com.reinertisa.supapi.exception.ResourceNotFoundException;
 import com.reinertisa.supapi.dto.Song;
@@ -6,6 +6,7 @@ import com.reinertisa.supapi.entity.SongEntity;
 import com.reinertisa.supapi.mapper.SongMapper;
 import com.reinertisa.supapi.dtorequest.SongRequest;
 import com.reinertisa.supapi.repository.SongRepository;
+import com.reinertisa.supapi.service.SongService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

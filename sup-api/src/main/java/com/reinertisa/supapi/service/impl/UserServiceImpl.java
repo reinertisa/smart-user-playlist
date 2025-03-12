@@ -1,4 +1,4 @@
-package com.reinertisa.supapi.service;
+package com.reinertisa.supapi.service.impl;
 
 import com.reinertisa.supapi.entity.ConfirmationEntity;
 import com.reinertisa.supapi.entity.CredentialEntity;
@@ -12,6 +12,7 @@ import com.reinertisa.supapi.repository.ConfirmationRepository;
 import com.reinertisa.supapi.repository.CredentialRepository;
 import com.reinertisa.supapi.repository.RoleRepository;
 import com.reinertisa.supapi.repository.UserRepository;
+import com.reinertisa.supapi.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
