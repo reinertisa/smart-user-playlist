@@ -2,12 +2,14 @@ package com.reinertisa.supapi.service.impl;
 
 import com.reinertisa.supapi.exception.ApiException;
 import com.reinertisa.supapi.service.EmailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import static com.reinertisa.supapi.utils.EmailUtils.getEmailMessage;
+import static com.reinertisa.supapi.utils.EmailUtils.getResetPasswordMessage;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -55,13 +57,4 @@ public class EmailServiceImpl implements EmailService {
         }
 
     }
-
-
-    private String getResetPasswordMessage(String name, String host, String token) {
-    }
-
-    private String getEmailMessage(String name, String host, String token) {
-
-    }
-
 }
