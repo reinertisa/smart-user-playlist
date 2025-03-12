@@ -1,11 +1,13 @@
 package com.reinertisa.supapi.service.impl;
 
+import com.reinertisa.supapi.domain.RequestContext;
 import com.reinertisa.supapi.entity.ConfirmationEntity;
 import com.reinertisa.supapi.entity.CredentialEntity;
 import com.reinertisa.supapi.entity.RoleEntity;
 import com.reinertisa.supapi.entity.UserEntity;
 import com.reinertisa.supapi.enumeration.Authority;
 import com.reinertisa.supapi.enumeration.EventType;
+import com.reinertisa.supapi.enumeration.LoginType;
 import com.reinertisa.supapi.event.UserEvent;
 import com.reinertisa.supapi.exception.ApiException;
 import com.reinertisa.supapi.repository.ConfirmationRepository;
@@ -65,6 +67,20 @@ public class UserServiceImpl implements UserService {
         userEntity.setEnabled(true);
         userRepository.save(userEntity);
         confirmationRepository.delete(confirmationEntity);
+    }
+
+    @Override
+    public void updateLoginAttempt(String email, LoginType loginType) {
+        UserEntity userEntity = getUserEntityByEmail(email);
+        RequestContext.setUserId(userEntity.getId());
+        switch (loginType) {
+            case LOGIN_ATTEMPT -> {
+
+            }
+            case LOGIN_SUCCESS -> {
+
+            }
+        }
     }
 
     private UserEntity getUserEntityByEmail(String email) {
