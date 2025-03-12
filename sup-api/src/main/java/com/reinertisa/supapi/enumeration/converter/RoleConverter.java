@@ -1,6 +1,6 @@
-package com.reinertisa.supapi.enumarations.converter;
+package com.reinertisa.supapi.enumeration.converter;
 
-import com.reinertisa.supapi.enumarations.Authority;
+import com.reinertisa.supapi.enumeration.Authority;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

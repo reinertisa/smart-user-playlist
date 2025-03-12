@@ -1,4 +1,4 @@
-package com.reinertisa.supapi.enumarations;
+package com.reinertisa.supapi.enumeration;
 
 import static com.reinertisa.supapi.constant.Constants.*;
 
