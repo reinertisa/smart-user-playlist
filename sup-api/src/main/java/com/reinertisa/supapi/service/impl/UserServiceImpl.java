@@ -1,5 +1,6 @@
 package com.reinertisa.supapi.service.impl;
 
+import com.reinertisa.supapi.cache.CacheStore;
 import com.reinertisa.supapi.domain.RequestContext;
 import com.reinertisa.supapi.entity.ConfirmationEntity;
 import com.reinertisa.supapi.entity.CredentialEntity;
@@ -31,15 +32,17 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final CredentialRepository credentialRepository;
     private final ConfirmationRepository confirmationRepository;
+    private final CacheStore<String, Integer> userCache;
     private final ApplicationEventPublisher publisher;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
                            CredentialRepository credentialRepository, ConfirmationRepository confirmationRepository,
-                           ApplicationEventPublisher publisher) {
+                           CacheStore<String, Integer> userCache, ApplicationEventPublisher publisher) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.credentialRepository = credentialRepository;
         this.confirmationRepository = confirmationRepository;
+        this.userCache = userCache;
         this.publisher = publisher;
     }
 
@@ -75,12 +78,21 @@ public class UserServiceImpl implements UserService {
         RequestContext.setUserId(userEntity.getId());
         switch (loginType) {
             case LOGIN_ATTEMPT -> {
-
+                if (userCache.get(userEntity.getEmail()) == null) {
+                    userEntity.setLoginAttempts(0);
+                    userEntity.setAccountNonLocked(true);
+                }
+                userEntity.setLoginAttempts(userEntity.getLoginAttempts() + 1);
+                userCache.put(userEntity.getEmail(), userEntity.getLoginAttempts());
+                if (userCache.get(userEntity.getEmail()) > 5) {
+                    userEntity.setAccountNonLocked(false);
+                }
             }
             case LOGIN_SUCCESS -> {
 
             }
         }
+        userRepository.save(userEntity);
     }
 
     private UserEntity getUserEntityByEmail(String email) {
