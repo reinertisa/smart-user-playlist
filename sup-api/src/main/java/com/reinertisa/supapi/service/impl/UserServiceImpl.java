@@ -20,6 +20,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.reinertisa.supapi.utils.UserUtils.createUserEntity;
@@ -89,7 +90,10 @@ public class UserServiceImpl implements UserService {
                 }
             }
             case LOGIN_SUCCESS -> {
-
+                userEntity.setAccountNonLocked(true);
+                userEntity.setLoginAttempts(0);
+                userEntity.setLastLogin(LocalDateTime.now());
+                userCache.evict(userEntity.getEmail());
             }
         }
         userRepository.save(userEntity);
