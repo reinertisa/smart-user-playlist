@@ -1,7 +1,6 @@
 package com.reinertisa.supapi.security;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reinertisa.supapi.domain.ApiAuthentication;
 import com.reinertisa.supapi.dtorequest.LoginRequest;
@@ -19,6 +18,8 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
+
+import static com.reinertisa.supapi.utils.RequestUtils.handleErrorResponse;
 
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -41,7 +42,7 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
             ApiAuthentication authentication = ApiAuthentication.unauthenticated(user.getEmail(), user.getPassword());
             return getAuthenticationManager().authenticate(authentication);
         } catch (Exception ex) {
-            //handleErrorResponse(request, response, ex);
+            handleErrorResponse(request, response, ex);
             return null;
         }
     }
