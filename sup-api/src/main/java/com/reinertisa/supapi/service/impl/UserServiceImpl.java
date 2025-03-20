@@ -2,6 +2,7 @@ package com.reinertisa.supapi.service.impl;
 
 import com.reinertisa.supapi.cache.CacheStore;
 import com.reinertisa.supapi.domain.RequestContext;
+import com.reinertisa.supapi.dto.User;
 import com.reinertisa.supapi.entity.ConfirmationEntity;
 import com.reinertisa.supapi.entity.CredentialEntity;
 import com.reinertisa.supapi.entity.RoleEntity;
@@ -22,8 +23,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.reinertisa.supapi.utils.UserUtils.createUserEntity;
+import static com.reinertisa.supapi.utils.UserUtils.fromUserEntity;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -97,6 +100,19 @@ public class UserServiceImpl implements UserService {
             }
         }
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public User getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findUserByUserId(userId)
+                .orElseThrow(() -> new ApiException("User not found"));
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
+    }
+
+    @Override
+    public CredentialEntity getUserCredentialById(Long userId) {
+        Optional<CredentialEntity> credentialById = credentialRepository.getCredentialByUserEntityId(userId);
+        return credentialById.orElseThrow(() -> new ApiException("Unable to find user credentials"));
     }
 
     private UserEntity getUserEntityByEmail(String email) {

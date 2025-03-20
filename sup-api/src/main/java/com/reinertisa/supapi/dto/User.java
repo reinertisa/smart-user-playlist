@@ -14,7 +14,7 @@ public class User {
     private String imageUrl;
     private String qrCodeImageUri;
     private String lastLogin;
-    private String createAt;
+    private String createdAt;
     private String updatedAt;
     private String role;
     private String authorities;
@@ -120,12 +120,12 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public String getCreateAt() {
-        return createAt;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(String createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getUpdatedAt() {
@@ -207,7 +207,7 @@ public class User {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", qrCodeImageUri='" + qrCodeImageUri + '\'' +
                 ", lastLogin='" + lastLogin + '\'' +
-                ", createAt='" + createAt + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 ", role='" + role + '\'' +
                 ", authorities='" + authorities + '\'' +
