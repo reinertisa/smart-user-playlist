@@ -28,7 +28,8 @@ public class UserResource {
     @PostMapping("/register")
     public ResponseEntity<Response> createUser(@RequestBody @Valid UserRequest user, HttpServletRequest request) {
         userService.createUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
-        return ResponseEntity.created(getUri()).body(getResponse(request, emptyMap(), "Account created. Check your email to enable your account.", HttpStatus.CREATED));
+        return ResponseEntity.created(URI.create("")).body(getResponse(request, emptyMap(),
+                        "Account created. Check your email to enable your account.", HttpStatus.CREATED));
     }
 
     @GetMapping("/verify/account")
@@ -36,9 +37,4 @@ public class UserResource {
         userService.verifyAccountKey(key);
         return ResponseEntity.ok().body(getResponse(request, emptyMap(), "Account verified.", HttpStatus.OK));
     }
-
-    private URI getUri() {
-        return URI.create("");
-    }
-
 }
