@@ -4,6 +4,7 @@ import com.reinertisa.supapi.domain.ApiAuthentication;
 import com.reinertisa.supapi.domain.RequestContext;
 import com.reinertisa.supapi.domain.Token;
 import com.reinertisa.supapi.domain.TokenData;
+import com.reinertisa.supapi.dto.User;
 import com.reinertisa.supapi.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -46,7 +47,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             } else {
                 Optional<String> refreshToken = jwtService.extractToken(request, REFRESH.getValue());
                 if (refreshToken.isPresent() && jwtService.getTokenData(refreshToken.get(), TokenData::isValid)) {
-                    var user = jwtService.getTokenData(refreshToken.get(), TokenData::getUser);
+                    User user = jwtService.getTokenData(refreshToken.get(), TokenData::getUser);
                     SecurityContextHolder.getContext().setAuthentication(
                                     getAuthentication(jwtService.createToken(user, Token::getAccess), request));
                     jwtService.addCookie(response, user, ACCESS);
@@ -63,7 +64,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        var shouldNotFilter = request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.name())
+        boolean shouldNotFilter = request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.name())
                 || Arrays.asList(PUBLIC_ROUTES).contains(request.getRequestURI());
         if (shouldNotFilter) {
             RequestContext.setUserId(0L);
@@ -72,7 +73,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private Authentication getAuthentication(String token, HttpServletRequest request) {
-        var authentication = ApiAuthentication.authenticated(jwtService.getTokenData(token, TokenData::getUser),
+        ApiAuthentication authentication = ApiAuthentication.authenticated(jwtService.getTokenData(token, TokenData::getUser),
                 jwtService.getTokenData(token, TokenData::getAuthorities));
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         return authentication;

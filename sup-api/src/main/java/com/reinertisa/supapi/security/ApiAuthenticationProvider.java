@@ -2,6 +2,7 @@ package com.reinertisa.supapi.security;
 
 import com.reinertisa.supapi.domain.ApiAuthentication;
 import com.reinertisa.supapi.domain.UserPrincipal;
+import com.reinertisa.supapi.dto.User;
 import com.reinertisa.supapi.entity.CredentialEntity;
 import com.reinertisa.supapi.exception.ApiException;
 import com.reinertisa.supapi.service.UserService;
@@ -31,7 +32,7 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         ApiAuthentication apiAuthentication = authenticationFunction.apply(authentication);
-        var user = userService.getUserByEmail(apiAuthentication.getEmail());
+        User user = userService.getUserByEmail(apiAuthentication.getEmail());
         if (user != null) {
             CredentialEntity userCredential = userService.getUserCredentialById(user.getId());
             if (userCredential.getUpdatedAt().minusDays(NINETY_DAYS).isAfter(LocalDateTime.now())) {
