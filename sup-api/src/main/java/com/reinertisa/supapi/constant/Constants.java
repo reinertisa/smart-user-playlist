@@ -7,7 +7,7 @@ public class Constants {
     public static final int STRENGTH = 12;
     public static final String BASE_PATH = "/**";
     public static final String FILE_NAME = "File-Name";
-    public static final String LOGIN_PATH = "/user/login";
+    public static final String LOGIN_PATH = "/api/v1/users/login";
 
     public static final String[] PUBLIC_ROUTES = { "/user/resetpassword/reset", "/user/verify/resetpassword", "/user/resetpassword", "/user/verify/qrcode", "/user/stream", "/user/id", "/user/login", "/user/register", "/user/new/password", "/user/verify", "/user/refresh/token", "/user/resetpassword", "/user/image", "/user/verify/account", "/user/verify/password", "/user/verify/code"};
     public static final String AUTHORITIES = "authorities";
