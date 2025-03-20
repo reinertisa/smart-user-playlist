@@ -90,3 +90,8 @@ logging:
     #    root: warn
     org.hibernate.sql: trace
     org.hibernate.orm.jdbc.bind: trace
+
+
+jwt:
+  expiration: ${JWT_EXPIRATION}
+  secret: ${JWT_SECRET}

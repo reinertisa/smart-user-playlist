@@ -1,6 +1,7 @@
 package com.reinertisa.supapi.domain;
 
 import com.reinertisa.supapi.dto.User;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
