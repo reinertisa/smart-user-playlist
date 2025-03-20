@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reinertisa.supapi.domain.ApiAuthentication;
 import com.reinertisa.supapi.dtorequest.LoginRequest;
 import com.reinertisa.supapi.enumeration.LoginType;
+import com.reinertisa.supapi.service.JwtService;
 import com.reinertisa.supapi.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,19 +22,21 @@ import java.io.IOException;
 
 import static com.reinertisa.supapi.utils.RequestUtils.handleErrorResponse;
 
-public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class ApiAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final UserService userService;
     private final JwtService jwtService;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService) {
+    public ApiAuthenticationFilter(AuthenticationManager authenticationManager,
+                                   UserService userService, JwtService jwtService) {
         super(new AntPathRequestMatcher("/api/v1/users/login", HttpMethod.POST.name()), authenticationManager);
         this.userService = userService;
         this.jwtService = jwtService;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
         try {
             LoginRequest user = new ObjectMapper()
                     .configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true)
@@ -48,7 +51,9 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain, Authentication authentication)
+            throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authentication);
     }
 }
