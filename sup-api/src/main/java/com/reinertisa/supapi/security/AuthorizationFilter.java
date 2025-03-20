@@ -47,11 +47,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 Optional<String> refreshToken = jwtService.extractToken(request, REFRESH.getValue());
                 if (refreshToken.isPresent() && jwtService.getTokenData(refreshToken.get(), TokenData::isValid)) {
                     var user = jwtService.getTokenData(refreshToken.get(), TokenData::getUser);
-                    SecurityContextHolder
-                            .getContext()
-                            .setAuthentication(
-                                    getAuthentication(jwtService.createToken(user, Token::getAccess), request)
-                            );
+                    SecurityContextHolder.getContext().setAuthentication(
+                                    getAuthentication(jwtService.createToken(user, Token::getAccess), request));
                     jwtService.addCookie(response, user, ACCESS);
                     RequestContext.setUserId(user.getId());
                 } else {
