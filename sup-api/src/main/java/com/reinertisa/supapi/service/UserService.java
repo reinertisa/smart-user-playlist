@@ -12,5 +12,6 @@ public interface UserService {
     void verifyAccountKey(String key);
     void updateLoginAttempt(String email, LoginType loginType);
     User getUserByUserId(String userId);
+    User getUserByEmail(String email);
     CredentialEntity getUserCredentialById(Long id);
 }

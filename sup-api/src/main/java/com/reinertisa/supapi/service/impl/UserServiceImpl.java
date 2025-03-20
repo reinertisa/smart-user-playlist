@@ -110,6 +110,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public CredentialEntity getUserCredentialById(Long userId) {
         Optional<CredentialEntity> credentialById = credentialRepository.getCredentialByUserEntityId(userId);
         return credentialById.orElseThrow(() -> new ApiException("Unable to find user credentials"));
