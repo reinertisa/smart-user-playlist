@@ -1,13 +1,14 @@
 package com.reinertisa.supapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "songs")
-public class SongEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+public class SongEntity extends Auditable {
+    @Column(updatable = false, unique = true, nullable = false)
+    private String songId;
 
     @Column(name = "title")
     private String title;
@@ -15,20 +16,27 @@ public class SongEntity {
     @Column(name = "artist")
     private String artist;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "fk_songs_owner",
+                    foreignKeyDefinition = "foreign key /* FK */ (user_id) references UserEntity",
+                    value = ConstraintMode.CONSTRAINT
+            )
+    )
+    private UserEntity owner;
+
     public SongEntity() {
     }
 
-    public SongEntity(String title, String artist) {
-        this.title = title;
-        this.artist = artist;
+    public String getSongId() {
+        return songId;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setSongId(String songId) {
+        this.songId = songId;
     }
 
     public String getTitle() {
@@ -47,12 +55,21 @@ public class SongEntity {
         this.artist = artist;
     }
 
+    public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "SongEntity{" +
-                "id=" + id +
+                "songId='" + songId + '\'' +
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
+                ", owner=" + owner +
                 '}';
     }
 }
