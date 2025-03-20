@@ -13,7 +13,7 @@ public class CredentialEntity extends Auditable {
     @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("user_id")
     private UserEntity userEntity;

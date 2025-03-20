@@ -19,6 +19,7 @@ import com.reinertisa.supapi.repository.UserRepository;
 import com.reinertisa.supapi.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,30 +32,31 @@ import static com.reinertisa.supapi.utils.UserUtils.fromUserEntity;
 @Service
 @Transactional(rollbackOn = Exception.class)
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CredentialRepository credentialRepository;
     private final ConfirmationRepository confirmationRepository;
+    private final BCryptPasswordEncoder encoder;
     private final CacheStore<String, Integer> userCache;
     private final ApplicationEventPublisher publisher;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
                            CredentialRepository credentialRepository, ConfirmationRepository confirmationRepository,
-                           CacheStore<String, Integer> userCache, ApplicationEventPublisher publisher) {
+                           BCryptPasswordEncoder encoder, CacheStore<String, Integer> userCache,
+                           ApplicationEventPublisher publisher) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.credentialRepository = credentialRepository;
         this.confirmationRepository = confirmationRepository;
+        this.encoder = encoder;
         this.userCache = userCache;
         this.publisher = publisher;
     }
 
-
     @Override
     public void createUser(String firstName, String lastName, String email, String password) {
         UserEntity userEntity = userRepository.save(createNewUser(firstName, lastName, email));
-        CredentialEntity credentialEntity = new CredentialEntity(userEntity, password);
+        CredentialEntity credentialEntity = new CredentialEntity(userEntity, encoder.encode(password));
         credentialRepository.save(credentialEntity);
         ConfirmationEntity confirmationEntity = new ConfirmationEntity(userEntity);
         confirmationRepository.save(confirmationEntity);
