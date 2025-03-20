@@ -14,4 +14,7 @@ public interface UserService {
     User getUserByUserId(String userId);
     User getUserByEmail(String email);
     CredentialEntity getUserCredentialById(Long id);
+    User setUpMfa(Long id);
+    User cancelMfa(Long id);
+    User verifyQrCode(String userId, String qrCode);
 }

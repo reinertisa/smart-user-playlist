@@ -17,7 +17,14 @@ import com.reinertisa.supapi.repository.CredentialRepository;
 import com.reinertisa.supapi.repository.RoleRepository;
 import com.reinertisa.supapi.repository.UserRepository;
 import com.reinertisa.supapi.service.UserService;
+import dev.samstevens.totp.code.CodeGenerator;
+import dev.samstevens.totp.code.CodeVerifier;
+import dev.samstevens.totp.code.DefaultCodeGenerator;
+import dev.samstevens.totp.code.DefaultCodeVerifier;
+import dev.samstevens.totp.time.SystemTimeProvider;
+import dev.samstevens.totp.time.TimeProvider;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,8 +33,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.reinertisa.supapi.utils.UserUtils.createUserEntity;
-import static com.reinertisa.supapi.utils.UserUtils.fromUserEntity;
+import static com.reinertisa.supapi.utils.UserUtils.*;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -70,7 +76,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void verifyAccountKey(String key) {
-
         ConfirmationEntity confirmationEntity = getUserConfirmation(key);
         UserEntity userEntity = getUserEntityByEmail(confirmationEntity.getUserEntity().getEmail());
         userEntity.setEnabled(true);
@@ -123,6 +128,55 @@ public class UserServiceImpl implements UserService {
         return credentialById.orElseThrow(() -> new ApiException("Unable to find user credentials"));
     }
 
+    @Override
+    public User setUpMfa(Long id) {
+        UserEntity userEntity = getUserEntityById(id);
+        String codeSecret = qrCodeSecret.get();
+        userEntity.setQrCodeImageUri(qrCodeImageUri.apply(userEntity.getEmail(), codeSecret));
+        userEntity.setQrCodeSecret(codeSecret);
+        userEntity.setMfa(true);
+        userRepository.save(userEntity);
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
+    }
+
+    @Override
+    public User cancelMfa(Long id) {
+        UserEntity userEntity = getUserEntityById(id);
+        userEntity.setMfa(false);
+        userEntity.setQrCodeImageUri(StringUtils.EMPTY);
+        userEntity.setQrCodeSecret(StringUtils.EMPTY);
+        userRepository.save(userEntity);
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
+    }
+
+    @Override
+    public User verifyQrCode(String userId, String qrCode) {
+        UserEntity userEntity = getUserEntityByUserId(userId);
+        verifyCode(qrCode, userEntity.getQrCodeSecret());
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
+    }
+
+    private boolean verifyCode(String qrCode, String qrCodeSecret) {
+        TimeProvider timeProvider = new SystemTimeProvider();
+        CodeGenerator codeGenerator = new DefaultCodeGenerator();
+        CodeVerifier codeVerifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
+        if (codeVerifier.isValidCode(qrCodeSecret, qrCode)) {
+            return true;
+        } else {
+            throw new ApiException("Invalid QR code. Please try again.");
+        }
+    }
+
+    private UserEntity getUserEntityByUserId(String userId) {
+        return userRepository.findUserByUserId(userId)
+                .orElseThrow(() -> new ApiException("User not found"));
+    }
+
+    private UserEntity getUserEntityById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ApiException("User not found"));
+    }
+
     private UserEntity getUserEntityByEmail(String email) {
         return userRepository
                 .findByEmailIgnoreCase(email)
@@ -130,7 +184,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private ConfirmationEntity getUserConfirmation(String key) {
-        return confirmationRepository.findByKey(key).orElseThrow(() -> new ApiException("Confirmation key not found."));
+        return confirmationRepository
+                .findByKey(key)
+                .orElseThrow(() -> new ApiException("Confirmation key not found."));
     }
 
     private UserEntity createNewUser(String firstName, String lastName, String email) {
