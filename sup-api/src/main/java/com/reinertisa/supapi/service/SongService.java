@@ -9,14 +9,9 @@ import java.util.List;
 public interface SongService {
 
     List<Song> findAll();
-
     Song findById(long id);
-
     Song create(SongRequest songRequest);
-
     Song update(long id, SongService songService);
-
     void delete(long id) throws ResourceNotFoundException;
-
     List<Song> filter(String title);
 }
